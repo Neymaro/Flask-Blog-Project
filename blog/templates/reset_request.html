@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %} 
+<div style="width:50%;margin:0 auto;background-color:#00BFFF;padding:50px">
+    <h1>Password Reset</h1>
+    <form method="POST" action=""> 
+        {{ form.hidden_tag()}}
+        <div>
+            {{form.email.label}}
+            {% if form.email.errors %}
+                {{form.email(class="form-input is-invalid")}}
+                <div style="color:red">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else%}
+                {{form.email(class="form-input")}}
+            {% endif %}
+
+            {{form.submit(class="form-button")}}
+        </div>
+    </form>
+    </div>
+
+{% endblock %} 

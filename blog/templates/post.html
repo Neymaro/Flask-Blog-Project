@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container">
+    <main class="content">
+    <article class="blog-post">
+        <h2>{{post.title}}</h2>
+        <p class="post-meta">Date of Post: {{post.date_posted.strftime('%Y-%m-%d')}}</p>
+        <div class="post-excerpt">
+          <p>
+            {{post.content}}
+          </p>
+          <!-- More content can go here -->
+        </div>
+        <div class="post-read-more"> 
+          <h4><a href="{{ url_for('user_posts', username=post.author.username) }}">{{post.author.username}}</a></h4>
+        </div>
+        {% if post.author == current_user %}
+        <a class="form-button" style="color:white" href={{ url_for('update_post', post_id=post.id) }}> Update </a>
+
+        
+        <button class="form-button" onclick="confirmDelete()">Delete</button>
+        
+          
+        <div class="confirmation-dialog" id="confirmationDialog">
+            <h3>This post will be deleted forever!</h3>
+            <p>Are you sure you want to delete?</p>
+
+            <button onclick="deleteConfirmed()">Yes</button>
+            <button onclick="cancelDelete()">No</button>
+        </div>
+
+        {% endif %}
+      </article>
+    </main>
+    <aside class="right-sidebar">
+      <div class="category-list">
+        <h2>Categories</h2>
+        <ul>
+          <li><a href="#category1">Category 1</a></li>
+          <li><a href="#category2">Category 2</a></li>
+          <li><a href="#category3">Category 3</a></li>
+          <!-- Add more categories as needed -->
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const deleteButton = document.getElementById('deleteButton');
+    const confirmationDialog = document.getElementById('confirmationDialog');
+  
+    function confirmDelete() {
+      confirmationDialog.style.display = 'block';
+    }
+  
+    function deleteConfirmed() {
+      // Perform the delete operation here
+      alert('This text deleted from database!');
+      window.location='{{ url_for('delete_post', post_id=post.id) }}'
+    }
+  
+    function cancelDelete() {
+      confirmationDialog.style.display = 'none';
+    }
+  </script>
+{% endblock %} 
+

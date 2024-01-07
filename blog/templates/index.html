@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %} 
+<div class="container">
+    <main class="content">
+    {% for item in post.items %}
+    <article class="blog-post">
+        <h2><a href="{{ url_for('post', post_id=item.id) }}">{{item.title}}</a></h2>
+        <p class="post-meta">Date of Post: {{item.date_posted.strftime('%Y-%m-%d')}}</p>
+        <div class="post-excerpt">
+          <p>
+            {{item.content}}
+          </p>
+          <!-- More content can go here -->
+        </div>
+        <div class="post-read-more"> 
+          <h4><a href="{{ url_for('user_posts', username=item.author.username) }}">{{item.author.username}}</a></h4>
+        </div>
+      </article>
+      {% endfor %}
+      {% for page_num in post.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if post.page == page_num %}
+          <a class="pagination active" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="pagination" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+    </main>
+    <aside class="right-sidebar">
+      <div class="category-list">
+        <h2>Categories</h2>
+        <ul>
+          <li><a href="#category1">Category 1</a></li>
+          <li><a href="#category2">Category 2</a></li>
+          <li><a href="#category3">Category 3</a></li>
+          <!-- Add more categories as needed -->
+        </ul>
+      </div>
+    </aside>
+  </div>
+{% endblock %} 
+

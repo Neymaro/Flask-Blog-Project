@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %} 
+<h1 style="margin:0 auto;text-align: center;background-color: #DCDCDC;">Profile Page</h1>
+<div class="profile-card">
+    <img src="{{ image_file }}" alt="Profile Image" class="profile-image">
+    <div class="profile-info">
+      <h2 class="fullname" style="text-transform:capitalize">{{current_user.username}}</h2>
+      <p class="email">{{ current_user.email }}</p>
+      <button class="update-button" onclick="openUpdateForm()">Update Profile</button>
+    </div>
+    
+    <form method="POST" action="" enctype="multipart/form-data"> 
+        {{ form.hidden_tag()}}
+    <div class="update-form" id="updateForm">
+        <div class="form-container">
+            <button class="form-button" onclick="closeUpdateForm()">X</button> 
+            <h2>Update Profile</h2>
+                <div>
+                <br><br>
+                {{form.username.label}}
+                {% if form.username.errors %}
+                    {{form.username(class="form-input is-invalid")}}
+                    <div style="color:red">
+                        {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.username(class="form-input")}}
+                {% endif %}
+    
+                {{form.email.label}}
+                {% if form.email.errors %}
+                    {{form.email(class="form-input is-invalid")}}
+                    <div style="color:red">
+                        {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else%}
+                    {{form.email(class="form-input")}}
+                {% endif %}
+
+                {{form.pp.label}}
+                {% if form.pp.errors %}
+                    {{form.pp(class="form-input is-invalid")}}
+                        {% for error in form.pp.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                {% else%}
+                    {{form.pp(class="form-input")}}  
+                {% endif %}
+    
+                {{form.submit(class="form-button")}}
+            
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+    function openUpdateForm() {
+      document.getElementById("updateForm").style.display = "flex";
+      setTimeout(() => {
+        document.getElementById("updateForm").style.opacity = 1;
+        document.getElementById("updateForm").style.transform = "translateY(0)";
+      }, 50);
+    }
+  
+    function closeUpdateForm() {
+      document.getElementById("updateForm").style.opacity = 0;
+      document.getElementById("updateForm").style.transform = "translateY(100%)";
+      setTimeout(() => {
+        document.getElementById("updateForm").style.display = "none";
+      }, 300);
+    }
+</script>
+{% endblock %} 

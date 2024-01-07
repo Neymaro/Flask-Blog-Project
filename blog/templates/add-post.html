@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %} 
+<div style="width:50%;margin:0 auto;background-color:#F5F5DC;padding:50px">
+    <h1>{{titleUp }}</h1>
+    <form method="POST" action=""> 
+        {{ form.hidden_tag()}}
+        <div>
+            {{form.title.label}}
+            {% if form.title.errors %}
+                {{form.title(class="form-input is-invalid")}}
+                <div style="color:red">
+                    {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{form.title(class="form-input")}}
+            {% endif %}
+    
+            {{form.content.label}}
+            {% if form.content.errors %}
+                {{form.content(class="form-input is-invalid")}}
+                <div style="color:red">
+                    {% for error in form.content.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else%}
+                {{form.content(class="form-input")}}
+            {% endif %}
+            
+
+            {{form.submit(class="form-button")}}
+            <br>
+            <br>
+        </div>
+    </form>
+    </div>
+
+{% endblock %} 
